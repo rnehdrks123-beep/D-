@@ -1,0 +1,6 @@
+{
+  "name": "DyMonth",
+  "description": "광고보다 성과와 매출에 집중하는 프리미엄 마케팅 에이전시 디와이먼스(DyMonth) 공식 랜딩페이지 및 무료진단 플랫폼입니다.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
