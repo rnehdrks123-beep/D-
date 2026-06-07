@@ -63,7 +63,7 @@ export default function Reviews() {
             CLIENT REVIEWS
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug">
-            현장의 사장님들께서 입증해 주신 신뢰
+            결과로 증명하는 마케팅, DyMonth
           </h2>
           <div className="h-1 w-12 bg-amber-500 mx-auto mt-4 rounded-full"></div>
           <p className="mt-5 text-sm sm:text-base text-slate-400 leading-relaxed font-sans">

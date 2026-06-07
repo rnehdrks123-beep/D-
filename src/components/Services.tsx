@@ -41,13 +41,10 @@ export default function Services({ onScrollToSection }: ServicesProps) {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <span className="text-xs font-bold text-amber-400 uppercase tracking-widest block mb-3 font-mono">
-            WHAT WE DO
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug">
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-snug text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-200">
             비즈니스 스케일업을 위한<br className="sm:hidden" /> 최고 수준의 디지털 마케팅
           </h2>
-          <div className="h-1 w-12 bg-amber-500 mx-auto mt-4 rounded-full"></div>
+          <div className="h-[2px] w-12 bg-gradient-to-r from-amber-500 to-amber-300 mx-auto mt-4 rounded-full"></div>
           <p className="mt-5 text-sm sm:text-base text-slate-400 leading-relaxed font-sans">
             포털 검색 점령부터 웹 제작, 실시간 AI 응대 체계 구축까지<br className="hidden sm:inline" />
             각 업종 특수성을 극대화하여 실제 문의 전화가 발생하는 고효율 마케팅을 제안합니다.

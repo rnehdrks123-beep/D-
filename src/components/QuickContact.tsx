@@ -16,11 +16,13 @@ interface QuickContactProps {
 export default function QuickContact({ onScrollToSection, onOpenKakaoChat, onShowSuccessToast }: QuickContactProps) {
   
   const handlePhoneClick = () => {
-    // In preview we'll copy to clipboard or open a quick prompt to prevent blank routing
-    const phoneNumber = '010-XXXX-XXXX';
+    const phoneNumber = '0507-1370-0253';
+    // Copy to clipboard
     navigator.clipboard.writeText(phoneNumber).then(() => {
-      onShowSuccessToast(`디와이먼스 상담 센터 연락처가 복사되었습니다 (${phoneNumber}). 즉시 유선 연락 하실 수 있습니다!`);
+      onShowSuccessToast(`디와이먼스 대표 예약 연락처가 복사되었습니다 (${phoneNumber}). 즉시 연결됩니다!`);
     });
+    // Trigger actual tel connection
+    window.location.href = `tel:${phoneNumber}`;
   };
 
   return (

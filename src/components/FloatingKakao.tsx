@@ -16,33 +16,12 @@ export default function FloatingKakao({ onOpenDiagnosis }: FloatingKakaoProps) {
   const [messages, setMessages] = useState<Array<{ sender: 'ai' | 'user'; text: string; time: string }>>([
     {
       sender: 'ai',
-      text: '안녕하세요! 디와이먼스 AI 자동화 상담 봇입니다. 🤖✨\n현재 상태의 마케팅 진단과 카카오톡 맞춤 문의가 필요하신가요?\n\n이름과 업종을 말씀해 주시면 더욱 정밀하게 즉시 상담을 도와드리겠습니다.',
+      text: '안녕하세요! 디와이먼스(DYMonth)의 수석 마케팅 컨설턴트입니다. 🤝✨\n현재 운영 중이신 사업의 플레이스 노출 부족, 리드 및 문의 수 감소 등 마케팅 관련 고민을 안고 계신가요?\n\n편하게 질문해 주시면 업종 분석과 상위 노출, 성과 창출을 위한 핵심 원인 진단을 도와드리겠습니다!',
       time: '오후 2:24'
     }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSendMessage = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!inputValue.trim()) return;
-
-    const userMsg = inputValue;
-    setMessages((prev) => [...prev, { sender: 'user', text: userMsg, time: formatTime() }]);
-    setInputValue('');
-    setIsSubmitting(true);
-
-    setTimeout(() => {
-      let reply = '';
-      if (userMsg.includes('진단') || userMsg.includes('신청') || userMsg.includes('무료')) {
-        reply = '무료 정밀 마케팅 진단 신청을 원하시는 군요! 우측 하단의 무료 진단 신청 전용 폼을 작성하시거나 아래 [무료 진단 폼 바로가기] 버튼을 누르시면 곧바로 상담 리포트가 접수됩니다!';
-      } else {
-        reply = '접수해 주신 소중한 분석 요청에 감사드립니다! 상세 매칭 진단을 위해 담당 마케팅 본부장이 영업시간(평일 10시~18시) 기준 15분 내로 즉각 연락을 드릴 예정입니다. 조금만 기다려주세요!';
-      }
-      setMessages((prev) => [...prev, { sender: 'ai', text: reply, time: formatTime() }]);
-      setIsSubmitting(false);
-    }, 1200);
-  };
 
   const formatTime = () => {
     const d = new Date();
@@ -52,6 +31,60 @@ export default function FloatingKakao({ onOpenDiagnosis }: FloatingKakaoProps) {
     const dispHours = hours % 12 || 12;
     const dispMinutes = minutes < 10 ? '0' + minutes : minutes;
     return `${ampm} ${dispHours}:${dispMinutes}`;
+  };
+
+  const executeSendMessage = async (textToSend: string) => {
+    if (!textToSend.trim() || isSubmitting) return;
+
+    const userTime = formatTime();
+    const updatedMessages = [...messages, { sender: 'user' as const, text: textToSend, time: userTime }];
+    setMessages(updatedMessages);
+    setIsSubmitting(true);
+
+    try {
+      // Send the entire chat history so Gemini has complete context
+      const chatPayload = updatedMessages.map(m => ({ sender: m.sender, text: m.text }));
+      
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ messages: chatPayload }),
+      });
+
+      if (!response.ok) {
+        throw new Error('API communication error');
+      }
+
+      const data = await response.json();
+      const aiReply = data.text || '죄송합니다. 메시지 분석 도중 오류가 발생했습니다.';
+      
+      setMessages((prev) => [
+        ...prev,
+        { sender: 'ai', text: aiReply, time: formatTime() }
+      ]);
+    } catch (error) {
+      console.error('Failed to get AI response:', error);
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: 'ai',
+          text: '죄송합니다. 수석 마케팅 컨설턴트와의 일시적인 통신 지연이 발생하고 있습니다.\n\n더 안정적이고 정교한 진단을 위해, 우측 하단의 [무료 진단 폼 바로가기] 전용 접수나 일대일 전문가 대면 미팅 신청을 활용해 주시길 권장해 드립니다.',
+          time: formatTime()
+        }
+      ]);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleSendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    const val = inputValue;
+    if (!val.trim()) return;
+    setInputValue('');
+    executeSendMessage(val);
   };
 
   return (
@@ -178,22 +211,7 @@ export default function FloatingKakao({ onOpenDiagnosis }: FloatingKakaoProps) {
               </button>
               <button
                 onClick={() => {
-                  setMessages((prev) => [
-                    ...prev,
-                    { sender: 'user', text: '포트폴리오 성공사례를 추천해 줘', time: formatTime() }
-                  ]);
-                  setIsSubmitting(true);
-                  setTimeout(() => {
-                    setMessages((prev) => [
-                      ...prev,
-                      {
-                        sender: 'ai',
-                        text: '디와이먼스 마케팅의 대표 성공 사례입니다:\n\n1. 전문직 브랜드 블로그: 월 수임 문의 4건 → 49건 폭증 (1,125%)\n2. 인테리어: 플레이스 조회수 3배 성장\n3. 뷰티샵: 실예약률 2.5배 증가\n\n모두 구매 의도 가망고객을 완벽히 타겟팅한 결과물입니다!',
-                        time: formatTime()
-                      }
-                    ]);
-                    setIsSubmitting(false);
-                  }, 1000);
+                  executeSendMessage('디와이먼스 마케팅의 대표 포트폴리오 성공사례와 그 핵심 원인 분석을 설명해 주십시오.');
                 }}
                 className="text-[10px] bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 font-medium py-1 px-2.5 rounded-full transition-all"
               >

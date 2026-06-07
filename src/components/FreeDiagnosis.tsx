@@ -168,7 +168,7 @@ export default function FreeDiagnosis({ onShowSuccessToast, onShowErrorToast }: 
                     id="bizName"
                     type="text"
                     required
-                    placeholder="예: 디와이먼스 청소, 뷰티살론"
+                    placeholder=""
                     value={bizName}
                     onChange={(e) => setBizName(e.target.value)}
                     className="w-full bg-slate-950 border border-slate-800 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none transition-all placeholder:text-slate-600 font-sans"
@@ -185,7 +185,7 @@ export default function FreeDiagnosis({ onShowSuccessToast, onShowErrorToast }: 
                     id="contactName"
                     type="text"
                     required
-                    placeholder="예: 홍길동 대표"
+                    placeholder=""
                     value={contactName}
                     onChange={(e) => setContactName(e.target.value)}
                     className="w-full bg-slate-950 border border-slate-800 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none transition-all placeholder:text-slate-600 font-sans"
@@ -204,7 +204,7 @@ export default function FreeDiagnosis({ onShowSuccessToast, onShowErrorToast }: 
                     id="phone"
                     type="tel"
                     required
-                    placeholder="예: 010-1234-5678"
+                    placeholder=""
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     className="w-full bg-slate-950 border border-slate-800 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none transition-all placeholder:text-slate-600 font-sans"

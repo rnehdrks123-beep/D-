@@ -23,7 +23,7 @@ export default function Portfolio({ onScrollToSection }: PortfolioProps) {
             SUCCESS STORIES
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug">
-            디와이먼스의 성과는 수치로 말합니다.
+            DyMonth의 성과는 수치로 말합니다.
           </h2>
           <div className="h-1 w-12 bg-amber-500 mx-auto mt-4 rounded-full"></div>
           <p className="mt-5 text-sm sm:text-base text-slate-400 leading-relaxed font-sans">
